@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'graphene_django',
+    'user'
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,8 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     }
 }
+
+AUTH_USER_MODEL = 'user.User'
 
 
 # Password validation
