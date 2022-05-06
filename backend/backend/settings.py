@@ -31,8 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'user',
     'graphene_django',
-    'user'
 ]
 
 MIDDLEWARE = [
@@ -81,6 +81,10 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = 'user.User'
+
+GRAPHENE = {
+    "SCHEMA": "backend.schema.schema"
+}
 
 
 # Password validation
