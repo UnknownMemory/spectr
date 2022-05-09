@@ -27,3 +27,15 @@ class Like(models.Model):
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=["user_id", "track_id"], name="unique_like")]
+
+
+class Notification(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_notification")
+    subject_id = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="subject_notification"
+    )
+    object_id = models.ForeignKey(
+        "audio.Track", on_delete=models.CASCADE, related_name="object_notification"
+    )
+    status = models.TextField()
+    type = models.TextField()
