@@ -18,3 +18,12 @@ class Follow(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="follower")
     following_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")
     followed_at = models.DateTimeField(auto_now_add=True, blank=True)
+
+
+class Like(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_like")
+    track_id = models.ForeignKey("audio.Track", on_delete=models.CASCADE, related_name="track_like")
+    liked_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["user_id", "track_id"], name="unique_like")]

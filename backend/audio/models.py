@@ -1,10 +1,8 @@
 from django.db import models
 
-from user.models import User
-
 
 class Album(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="album_artist")
+    user_id = models.ForeignKey("user.User", on_delete=models.CASCADE, related_name="album_artist")
     name = models.TextField(null=False)
     cover = models.URLField()
     released = models.DateTimeField()
@@ -15,7 +13,7 @@ class Genre(models.Model):
 
 
 class Track(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="track_artist")
+    user_id = models.ForeignKey("user.User", on_delete=models.CASCADE, related_name="track_artist")
     trackname = models.TextField(null=False)
     cover = models.URLField()
     album = models.ForeignKey(Album, on_delete=models.SET_NULL, related_name="album", null=True)
@@ -28,7 +26,7 @@ class Track(models.Model):
 
 
 class Playlist(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
+    user_id = models.ForeignKey("user.User", on_delete=models.CASCADE, related_name="user")
     name = models.CharField(max_length=50, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
 
