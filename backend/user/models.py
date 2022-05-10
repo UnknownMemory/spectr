@@ -9,9 +9,9 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    bio = models.CharField(max_length=255)
-    url = models.JSONField()
-    picture = models.URLField()
+    bio = models.CharField(max_length=255, blank=True)
+    url = models.JSONField(null=True, blank=True)
+    picture = models.URLField(blank=True)
 
 
 class Follow(models.Model):
