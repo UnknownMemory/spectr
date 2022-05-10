@@ -4,22 +4,58 @@ from graphene_django import DjangoObjectType
 from user.models import User, Profile, Follow
 
 
+# region User
 class UserType(DjangoObjectType):
     class Meta:
         model = User
         fields = "__all__"
 
 
+class CreateUser(graphene.Mutation):
+    user = graphene.Field(UserType)
+
+    class Arguments:
+        first_name = graphene.String(required=True)
+        last_name = graphene.String(required=True)
+        username = graphene.String(required=True)
+        email = graphene.String(required=True)
+        password = graphene.String(required=True)
+
+    @classmethod
+    def mutate(cls, root, info, first_name, last_name, username, email, password):
+        user = User(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            display_name=username,
+            email=email,
+        )
+
+        user.set_password(password)
+        user.save()
+
+        return CreateUser(user=user)
+
+
+# endregion
+
+# region Profile
 class ProfileType(DjangoObjectType):
     class Meta:
         model = Profile
         fields = "__all__"
 
 
+# endregion
+
+# region Follow
 class FollowType(DjangoObjectType):
     class Meta:
         model = Follow
         fields = "__all__"
+
+
+# endregion
 
 
 class Query(graphene.ObjectType):
@@ -37,4 +73,8 @@ class Query(graphene.ObjectType):
         return Profile.objects.get(user_id=user_id)
 
 
-schema = graphene.Schema(query=Query)
+class Mutation(graphene.ObjectType):
+    create_user = CreateUser.Field()
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
