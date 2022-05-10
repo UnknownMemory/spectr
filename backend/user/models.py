@@ -3,14 +3,14 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    country = models.TextField(blank=True)
+    country = models.TextField()
     display_name = models.CharField(max_length=50, null=False)
 
 
 class Profile(models.Model):
     id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    bio = models.CharField(max_length=255, blank=True)
-    url = models.JSONField(blank=True)
+    bio = models.CharField(max_length=255)
+    url = models.JSONField()
     picture = models.URLField()
 
 
